@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>PoultryCare Veterinary Medicine | Trusted Poultry Health Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8C96A;
+  --gold-pale: #F5E8C0;
+  --deep: #0D1F15;
+  --forest: #1B3D27;
+  --moss: #2E5C3E;
+  --sage: #5C8A6A;
+  --sage-light: #8AB89A;
+  --cream: #FAF6EE;
+  --warm: #F5EFE3;
+  --sand: #EDE3CE;
+  --charcoal: #161616;
+  --muted: #5A5A5A;
+  --light-muted: #8A8A8A;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--cream);
+  color: var(--charcoal);
+  cursor: default;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--deep); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  height: 72px;
+  background: rgba(250, 246, 238, 0.92);
+  backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+nav.scrolled {
+  background: rgba(250,246,238,0.98);
+  box-shadow: 0 1px 32px rgba(0,0,0,0.06);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 14px;
+  text-decoration: none;
+}
+.logo-icon {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: white;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.nav-brand-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--deep);
+  line-height: 1.2;
+}
+.nav-brand-text span {
+  display: block;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+.nav-links a {
+  font-size: 0.82rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 1px; background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.25s;
+}
+.nav-links a:hover { color: var(--deep); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-cta {
+  background: var(--deep);
+  color: var(--gold);
+  padding: 10px 24px;
+  border-radius: 2px;
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-cta:hover { background: var(--gold); color: var(--deep); }
+
+/* Hamburger */
+.menu-btn {
+  display: none; background: none; border: none;
+  cursor: pointer; padding: 8px; flex-direction: column; gap: 5px;
+}
+.menu-btn span {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--deep); transition: 0.3s; border-radius: 2px;
+}
+.menu-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.menu-btn.open span:nth-child(2) { opacity: 0; }
+.menu-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* ─── MOBILE NAV — FIXED ─── */
+.mobile-nav {
+  position: fixed;
+  top: 72px;
+  right: 0;
+  width: 280px;
+  height: calc(100vh - 72px);
+  background: var(--deep);
+  z-index: 999;
+  padding: 48px 32px;
+  flex-direction: column;
+  gap: 8px;
+  /* Hidden on desktop: no display at all */
+  display: none;
+  /* On mobile: visible but off-screen until .active */
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s;
+}
+.mobile-nav a {
+  font-size: 1.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  transition: color 0.2s;
+}
+.mobile-nav a:hover { color: var(--gold); }
+.mobile-nav .m-cta {
+  margin-top: 24px; background: var(--gold);
+  color: var(--deep); text-align: center;
+  border-radius: 2px; font-family: 'Syne', sans-serif;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 2px;
+  padding: 14px; text-transform: uppercase;
+}
+.overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 998; opacity: 0; visibility: hidden; transition: 0.2s;
+}
+.overlay.active { opacity: 1; visibility: visible; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  background: var(--deep);
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* Ambient background */
+.hero-ambient {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 60% at 80% 60%, rgba(45,92,62,0.5) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 40% at 20% 20%, rgba(201,168,76,0.08) 0%, transparent 60%);
+}
+.hero-lines {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+.hero-lines::before {
+  content: '';
+  position: absolute;
+  top: -20%; left: 50%; width: 1px; height: 140%;
+  background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.15), transparent);
+}
+
+/* Noise texture overlay */
+.hero::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+
+.hero-left {
+  position: relative; z-index: 2;
+  padding: 130px 60px 80px 7%;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-bottom: 36px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--gold);
+}
+.hero-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: rgba(250,246,238,0.95);
+  margin-bottom: 28px;
+  letter-spacing: -0.5px;
+}
+.hero-h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+.hero-h1 strong {
+  font-weight: 700;
+  display: block;
+}
+.hero-desc {
+  color: rgba(250,246,238,0.5);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  max-width: 440px;
+  margin-bottom: 44px;
+  font-weight: 400;
+}
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-gold {
+  background: var(--gold);
+  color: var(--deep);
+  padding: 14px 32px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+.btn-ghost {
+  background: transparent;
+  color: rgba(250,246,238,0.7);
+  padding: 13px 28px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(250,246,238,0.2);
+  border-radius: 2px;
+  transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+.hero-right {
+  position: relative; z-index: 2;
+  padding: 130px 7% 80px 40px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+/* Metric cards */
+.metric-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.metric {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 24px 20px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.metric:hover {
+  background: rgba(201,168,76,0.07);
+  border-color: rgba(201,168,76,0.2);
+}
+.metric-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem; font-weight: 700;
+  color: var(--gold); line-height: 1;
+  margin-bottom: 6px;
+}
+.metric-label {
+  font-size: 0.72rem; letter-spacing: 2px;
+  color: rgba(250,246,238,0.4);
+  text-transform: uppercase;
+}
+.hero-trust {
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.18);
+  border-radius: 8px; padding: 20px 24px;
+  display: flex; align-items: center; gap: 14px;
+}
+.trust-icon { font-size: 1.6rem; }
+.trust-text h4 { color: var(--gold-pale); font-size: 0.88rem; font-weight: 600; margin-bottom: 2px; }
+.trust-text p { color: rgba(250,246,238,0.4); font-size: 0.78rem; }
+
+/* ─── TICKER / TRUST BAR ─── */
+.ticker-wrap {
+  background: var(--gold);
+  overflow: hidden; height: 44px;
+  display: flex; align-items: center;
+}
+.ticker {
+  display: flex; gap: 0;
+  animation: ticker 28s linear infinite;
+  white-space: nowrap;
+}
+.ticker-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 36px;
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--deep);
+}
+.ticker-dot { width: 4px; height: 4px; background: var(--deep); border-radius: 50%; opacity: 0.4; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── SECTION COMMON ─── */
+.section { padding: 110px 7%; }
+.s-label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--sage);
+  margin-bottom: 16px;
+}
+.s-label::before { content: ''; width: 24px; height: 1px; background: var(--sage); }
+.s-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--deep);
+  margin-bottom: 20px;
+  letter-spacing: -0.3px;
+}
+.s-title em { font-style: italic; color: var(--moss); }
+.s-title strong { font-weight: 700; }
+.s-sub {
+  font-size: 0.96rem; color: var(--muted);
+  line-height: 1.75; max-width: 520px;
+}
+.s-header { margin-bottom: 64px; }
+
+/* ─── WHY US ─── */
+.why-us { background: var(--warm); }
+.why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+.why-card {
+  background: var(--cream);
+  padding: 40px 32px;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+  cursor: default;
+}
+.why-card:hover { background: var(--deep); }
+.why-card:hover .why-title { color: var(--gold); }
+.why-card:hover .why-body { color: rgba(250,246,238,0.6); }
+.why-card:hover .why-num { color: rgba(201,168,76,0.15); }
+.why-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem; font-weight: 700;
+  color: rgba(0,0,0,0.05);
+  position: absolute; top: 16px; right: 24px;
+  line-height: 1; transition: color 0.3s;
+}
+.why-icon-wrap {
+  width: 52px; height: 52px;
+  background: var(--warm);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  transition: background 0.3s;
+}
+.why-card:hover .why-icon-wrap { background: rgba(201,168,76,0.15); }
+.why-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem; font-weight: 600;
+  color: var(--deep); margin-bottom: 10px;
+  transition: color 0.3s;
+}
+.why-body { font-size: 0.88rem; color: var(--muted); line-height: 1.65; transition: color 0.3s; }
+
+/* ─── PRODUCTS ─── */
+.products-section { background: var(--cream); }
+.products-grid { display: flex; flex-direction: column; gap: 3px; }
+
+.product-item {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  background: var(--warm);
+  overflow: hidden;
+  border-radius: 4px;
+  transition: box-shadow 0.3s;
+}
+.product-item:hover { box-shadow: 0 8px 48px rgba(0,0,0,0.08); }
+.product-item.alt { grid-template-columns: 1fr 380px; }
+.product-item.alt .prod-visual { order: 2; }
+.product-item.alt .prod-info { order: 1; }
+
+.prod-visual {
+  background: var(--deep);
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 48px 32px; gap: 20px;
+  min-height: 380px;
+}
+.prod-visual::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(45,92,62,0.4) 0%, transparent 80%);
+}
+.prod-img-frame {
+  position: relative; z-index: 1;
+  width: 180px; height: 180px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.prod-img-frame img { width: 100%; height: 100%; object-fit: contain; }
+.prod-badge-tag {
+  position: relative; z-index: 1;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold-pale);
+  padding: 6px 18px; border-radius: 100px;
+  font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+}
+.prod-num-big {
+  position: absolute; bottom: -10px; right: 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 8rem; font-weight: 700;
+  color: rgba(255,255,255,0.04);
+  line-height: 1; z-index: 0;
+  pointer-events: none;
+}
+
+.prod-info {
+  padding: 52px 56px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.prod-cat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--sage);
+  margin-bottom: 10px;
+}
+.prod-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem; font-weight: 600;
+  color: var(--deep); line-height: 1;
+  margin-bottom: 6px;
+}
+.prod-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 1.05rem;
+  color: var(--light-muted); margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+.prod-benefits { list-style: none; margin-bottom: 28px; }
+.prod-benefits li {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 9px 0;
+  font-size: 0.9rem; color: var(--muted);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.prod-benefits li .chk {
+  color: var(--moss); font-weight: 700; margin-top: 1px;
+  font-size: 0.85rem;
+}
+.dosage-strip {
+  background: var(--sand);
+  border-radius: 6px; padding: 14px 18px;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  align-items: center; margin-bottom: 28px;
+}
+.dosage-label {
+  font-size: 0.68rem; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+  font-weight: 600; margin-right: 4px;
+}
+.d-pill {
+  background: white; border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 4px; padding: 5px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem; color: var(--deep);
+}
+.btn-enquire {
+  align-self: flex-start;
+  background: var(--deep);
+  color: var(--gold);
+  padding: 12px 28px;
+  text-decoration: none;
+  font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  border-radius: 2px;
+  transition: background 0.2s, color 0.2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-enquire:hover { background: var(--gold); color: var(--deep); }
+
+/* Photo gallery row */
+.photo-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  margin-top: 3px;
+}
+.photo-cell {
+  aspect-ratio: 4/3; overflow: hidden;
+  background: var(--sand);
+  position: relative;
+}
+.photo-cell img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s;
+}
+.photo-cell:hover img { transform: scale(1.05); }
+.photo-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(13,31,21,0.7));
+  color: rgba(250,246,238,0.8);
+  font-size: 0.72rem; letter-spacing: 2px;
+  text-transform: uppercase; padding: 28px 16px 12px;
+}
+
+/* ─── GUIDE ─── */
+.guide-section {
+  background: var(--deep);
+  color: var(--cream);
+  position: relative; overflow: hidden;
+}
+.guide-section::before {
+  content: 'CARE';
+  position: absolute; right: -2%; top: 50%; transform: translateY(-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18rem; font-weight: 700;
+  color: rgba(255,255,255,0.02); line-height: 1;
+  pointer-events: none;
+}
+.guide-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start;
+}
+.guide-section .s-title { color: var(--cream); }
+.guide-section .s-title em { color: var(--gold); }
+.guide-section .s-label { color: rgba(201,168,76,0.6); }
+.guide-section .s-label::before { background: rgba(201,168,76,0.4); }
+.guide-tip {
+  background: rgba(201,168,76,0.09);
+  border: 1px solid rgba(201,168,76,0.22);
+  border-radius: 8px; padding: 28px 28px;
+  margin-top: 32px;
+}
+.guide-tip strong { color: var(--gold); font-size: 0.9rem; display: block; margin-bottom: 8px; }
+.guide-tip p { color: rgba(250,246,238,0.6); font-size: 0.9rem; line-height: 1.7; }
+
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step {
+  display: flex; gap: 24px; align-items: flex-start;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  opacity: 0; transform: translateX(20px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+.step.visible { opacity: 1; transform: translateX(0); }
+.step-n {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: var(--gold); color: var(--deep);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700;
+}
+.step h4 { color: var(--cream); font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
+.step p { color: rgba(250,246,238,0.5); font-size: 0.88rem; line-height: 1.6; }
+
+/* ─── DOSING TABLE ─── */
+.dosing-section { background: var(--warm); }
+.table-wrap {
+  border-radius: 8px; overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.08);
+  overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; background: white; min-width: 640px; }
+thead tr { background: var(--deep); }
+thead th {
+  padding: 16px 22px;
+  color: rgba(250,246,238,0.7);
+  font-size: 0.68rem; letter-spacing: 2.5px; text-transform: uppercase;
+  font-weight: 500; text-align: left;
+}
+tbody tr { border-bottom: 1px solid rgba(0,0,0,0.05); transition: background 0.15s; }
+tbody tr:hover { background: var(--cream); }
+tbody td { padding: 16px 22px; font-size: 0.88rem; color: var(--muted); }
+.badge {
+  display: inline-block; padding: 4px 12px;
+  border-radius: 100px; font-size: 0.72rem; font-weight: 700;
+}
+.b-stress { background: #FFF3CD; color: #7A5800; }
+.b-liver { background: #D1ECF1; color: #0A4A58; }
+.b-cal { background: #D4EDDA; color: #0F4A1F; }
+
+/* ─── CONTACT ─── */
+.contact-section { background: var(--cream); }
+.contact-inner { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start; }
+.contact-detail {
+  display: flex; gap: 18px; align-items: flex-start;
+  padding: 22px 0; border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+.c-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: var(--deep); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.contact-detail h4 { font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.contact-detail p, .contact-detail a { font-size: 0.96rem; color: var(--deep); text-decoration: none; font-weight: 500; }
+.wa-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: #25D366; color: white;
+  padding: 14px 28px; border-radius: 4px;
+  text-decoration: none; font-size: 0.85rem; font-weight: 600;
+  margin-top: 28px; transition: opacity 0.2s;
+}
+.wa-btn:hover { opacity: 0.9; }
+
+/* Form */
+.form-card {
+  background: white;
+  border-radius: 8px; padding: 48px;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+.form-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem; font-weight: 600;
+  color: var(--deep); margin-bottom: 6px;
+}
+.form-sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 28px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.fgroup { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.fgroup label {
+  font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); font-weight: 600;
+}
+.fgroup input, .fgroup select, .fgroup textarea {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  border-radius: 4px;
+  font-family: 'Syne', sans-serif; font-size: 0.9rem;
+  background: var(--cream); color: var(--deep);
+  transition: border-color 0.2s;
+  outline: none;
+}
+.fgroup input:focus, .fgroup select:focus, .fgroup textarea:focus {
+  border-color: var(--gold);
+}
+.fgroup textarea { min-height: 100px; resize: vertical; }
+.form-submit {
+  width: 100%; background: var(--deep); color: var(--gold);
+  border: none; padding: 15px;
+  font-family: 'Syne', sans-serif; font-size: 0.82rem;
+  font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  border-radius: 4px; cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.form-submit:hover { background: var(--gold); color: var(--deep); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--charcoal); color: rgba(255,255,255,0.4);
+  padding: 72px 7% 32px;
+}
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.f-brand h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 600;
+  color: white; margin-bottom: 8px;
+}
+.f-brand .tagline {
+  font-size: 0.72rem; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 16px;
+}
+.f-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 300px; }
+.f-col h4 {
+  font-size: 0.72rem; letter-spacing: 3px;
+  text-transform: uppercase; color: rgba(255,255,255,0.6);
+  margin-bottom: 18px; font-weight: 600;
+}
+.f-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.f-col ul li a {
+  color: rgba(255,255,255,0.4); text-decoration: none;
+  font-size: 0.9rem; transition: color 0.2s;
+}
+.f-col ul li a:hover { color: var(--gold); }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 28px; flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom p { font-size: 0.8rem; }
+.f-badges { display: flex; gap: 10px; }
+.f-badge {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 5px 14px; border-radius: 100px;
+  font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+/* WhatsApp float */
+.wa-float {
+  position: fixed; bottom: 28px; right: 28px;
+  background: #25D366; width: 56px; height: 56px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: white; text-decoration: none;
+  box-shadow: 0 4px 24px rgba(37,211,102,0.35);
+  z-index: 1000;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.wa-float:hover { transform: scale(1.08); box-shadow: 0 6px 32px rgba(37,211,102,0.45); }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
+  .product-item { grid-template-columns: 300px 1fr; }
+  .product-item.alt { grid-template-columns: 1fr 300px; }
+}
+
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links, .nav-cta { display: none; }
+  .menu-btn { display: flex; }
+  .mobile-nav { display: flex; visibility: hidden; transform: translateX(100%); }
+  .mobile-nav.active { transform: translateX(0); visibility: visible; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 120px 5% 80px; }
+  .product-item, .product-item.alt { grid-template-columns: 1fr; }
+  .product-item.alt .prod-visual { order: 0; }
+  .product-item.alt .prod-info { order: 0; }
+  .guide-inner { grid-template-columns: 1fr; gap: 48px; }
+  .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .photo-row { grid-template-columns: 1fr 1fr; }
+  .photo-row .photo-cell:last-child { display: none; }
+}
+@media (max-width: 640px) {
+  .section { padding: 72px 5%; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-card { padding: 28px 20px; }
+  .prod-info { padding: 32px 24px; }
+  .why-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+  .metric-row { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <img src="./images/logo-removebg-preview.png" alt="PoultryCare Logo" class="logo-icon"
+         onerror="this.src='https://placehold.co/200x200?text=PC'">
+    <div class="nav-brand-text">
+      PoultryCare™
+      <span>Veterinary Medicine</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#guide">Care Guide</a></li>
+    <li><a href="#dosing">Dosing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get a Quote</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#products" class="m-link">Products</a>
+  <a href="#guide" class="m-link">Care Guide</a>
+  <a href="#dosing" class="m-link">Dosing</a>
+  <a href="#contact" class="m-link">Contact</a>
+  <a href="#contact" class="m-link m-cta">Get a Quote →</a>
+</nav>
+<div class="overlay" id="overlay"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ambient"></div>
+  <div class="hero-lines"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">Made in India · Trusted by Farmers</div>
+    <h1 class="hero-h1">
+      Advanced Care for
+      <em>Healthy,</em>
+      <strong>High-Yielding Poultry</strong>
+    </h1>
+    <p class="hero-desc">
+      Science-backed vaccines and supplements for stress management, liver health, and mineral growth. Trusted by poultry and livestock farmers across Odisha and beyond.
+    </p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-gold">Explore Products <span>→</span></a>
+      <a href="tel:+917681050912" class="btn-ghost">📞 Call Experts</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="metric-row">
+      <div class="metric"><div class="metric-val">↑28%</div><div class="metric-label">FCR Improvement</div></div>
+      <div class="metric"><div class="metric-val">↓40%</div><div class="metric-label">Stress Mortality</div></div>
+    </div>
+    <div class="metric-row">
+      <div class="metric"><div class="metric-val">↑35%</div><div class="metric-label">Egg Production</div></div>
+      <div class="metric"><div class="metric-val">3×</div><div class="metric-label">Faster Recovery</div></div>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-icon">🔬</div>
+      <div class="trust-text">
+        <h4>Vet-Formulated Precision</h4>
+        <p>Every formula clinically validated for broilers &amp; layers</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">🇮🇳 Made in India<span class="ticker-dot"></span></span>
+    <span class="ticker-item">🔬 Advanced Recovery Tech<span class="ticker-dot"></span></span>
+    <span class="ticker-item">✅ Safe &amp; Effective<span class="ticker-dot"></span></span>
+    <span class="ticker-item">💊 Vet-Formulated<span class="ticker-dot"></span></span>
+    <span class="ticker-item">🐣 Broilers &amp; Layers<span class="ticker-dot"></span></span>
+    <span class="ticker-item">📍 Odisha, India<span class="ticker-dot"></span></span>
+    <!-- Duplicate for seamless loop -->
+    <span class="ticker-item">🇮🇳 Made in India<span class="ticker-dot"></span></span>
+    <span class="ticker-item">🔬 Advanced Recovery Tech<span class="ticker-dot"></span></span>
+    <span class="ticker-item">✅ Safe &amp; Effective<span class="ticker-dot"></span></span>
+    <span class="ticker-item">💊 Vet-Formulated<span class="ticker-dot"></span></span>
+    <span class="ticker-item">🐣 Broilers &amp; Layers<span class="ticker-dot"></span></span>
+    <span class="ticker-item">📍 Odisha, India<span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section class="section why-us">
+  <div class="s-header reveal">
+    <span class="s-label">Why Choose Us</span>
+    <h2 class="s-title">The PoultryCare <em>Difference</em></h2>
+    <p class="s-sub">From hatchery to harvest, we provide every solution your flock needs to thrive in any condition.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal reveal-delay-1">
+      <div class="why-num">01</div>
+      <div class="why-icon-wrap">🌡️</div>
+      <div class="why-title">Heat Stress Defense</div>
+      <div class="why-body">Electrolyte-rich formulations protect your birds during extreme temperatures, preventing mortality spikes.</div>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <div class="why-num">02</div>
+      <div class="why-icon-wrap">🫀</div>
+      <div class="why-title">Liver Regeneration</div>
+      <div class="why-body">Silymarin-based liver tonics repair damaged cells, improving digestion and productivity yields.</div>
+    </div>
+    <div class="why-card reveal reveal-delay-3">
+      <div class="why-num">03</div>
+      <div class="why-icon-wrap">🦴</div>
+      <div class="why-title">Mineral Fortification</div>
+      <div class="why-body">High-concentration calcium and phosphorus ensure strong eggshells and skeletal integrity.</div>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.4s">
+      <div class="why-num">04</div>
+      <div class="why-icon-wrap">💉</div>
+      <div class="why-title">Vaccine Support</div>
+      <div class="why-body">Pre and post-vaccination protocols reduce stress reactions and boost antibody responses.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section products-section" id="products">
+  <div class="s-header reveal">
+    <span class="s-label">Our Products</span>
+    <h2 class="s-title">Solutions for <em>Every</em> <strong>Challenge</strong></h2>
+    <p class="s-sub">Three targeted formulations covering the most critical areas of poultry health.</p>
+  </div>
+  <div class="products-grid">
+
+    <!-- Product 1 -->
+    <div class="product-item reveal">
+      <div class="prod-visual">
+        <div class="prod-img-frame">
+          <img src="/PHOTO-2026-04-29-14-46-34.jpg" alt="StressNill Pro"
+               onerror="this.parentElement.innerHTML='<span style=\'font-size:3rem\'>🧪</span>'">
+        </div>
+        <div class="prod-badge-tag">Stress Management</div>
+        <div class="prod-num-big">01</div>
+      </div>
+      <div class="prod-info">
+        <div class="prod-cat">Product 01 · Electrolyte Formula</div>
+        <div class="prod-name">StressNill Pro</div>
+        <div class="prod-tagline">"The All-in-One Defense Against Poultry Stress"</div>
+        <ul class="prod-benefits">
+          <li><span class="chk">✓</span> Instant cooling effect and electrolyte balance restoration</li>
+          <li><span class="chk">✓</span> Reduces mortality and improves survival rates significantly</li>
+          <li><span class="chk">✓</span> Improves Feed Conversion Ratio (FCR) under stress conditions</li>
+        </ul>
+        <div class="dosage-strip">
+          <span class="dosage-label">Dosage:</span>
+          <span class="d-pill">1 ml / Liter (normal)</span>
+          <span class="d-pill">2–5 ml / Liter (severe)</span>
+        </div>
+        <a href="#contact" class="btn-enquire">Enquire Now →</a>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-item alt reveal">
+      <div class="prod-visual">
+        <div class="prod-img-frame">
+          <img src="/WhatsApp Image 2026-04-29 at 14.45.49.jpeg" alt="Wings Livoton"
+               onerror="this.parentElement.innerHTML='<span style=\'font-size:3rem\'>🌿</span>'">
+        </div>
+        <div class="prod-badge-tag">Liver Support</div>
+        <div class="prod-num-big">02</div>
+      </div>
+      <div class="prod-info">
+        <div class="prod-cat">Product 02 · Hepatic Formula</div>
+        <div class="prod-name">Wings Livoton</div>
+        <div class="prod-tagline">"Ideal Liver Tonic with Silymarin &amp; Iron"</div>
+        <ul class="prod-benefits">
+          <li><span class="chk">✓</span> Repairs damaged liver cells with potent Silymarin extract</li>
+          <li><span class="chk">✓</span> Secretes digestive juices for better nutrient absorption</li>
+          <li><span class="chk">✓</span> Maintains weight and boosts egg &amp; meat production output</li>
+        </ul>
+        <div class="dosage-strip">
+          <span class="dosage-label">Dosage:</span>
+          <span class="d-pill">Broilers: 10–20 ml/day</span>
+          <span class="d-pill">Layers: 20 ml/day × 10d</span>
+        </div>
+        <a href="#contact" class="btn-enquire">Enquire Now →</a>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-item reveal">
+      <div class="prod-visual">
+        <div class="prod-img-frame">
+          <img src="../PHOTO-2026-04-29-14-45-55.jpg" alt="Wings Cal-P"
+               onerror="this.parentElement.innerHTML='<span style=\'font-size:3rem\'>💊</span>'">
+        </div>
+        <div class="prod-badge-tag">Calcium &amp; Minerals</div>
+        <div class="prod-num-big">03</div>
+      </div>
+      <div class="prod-info">
+        <div class="prod-cat">Product 03 · Mineral Formula</div>
+        <div class="prod-name">Wings Cal-P</div>
+        <div class="prod-tagline">"Premium Liquid Calcium &amp; Phosphorus Tonic"</div>
+        <ul class="prod-benefits">
+          <li><span class="chk">✓</span> Ensures strong, unbreakable eggshells every cycle</li>
+          <li><span class="chk">✓</span> Maintains healthy bones and joint integrity in layers</li>
+          <li><span class="chk">✓</span> Supports fertility and improves hatchability rates</li>
+        </ul>
+        <div class="dosage-strip">
+          <span class="dosage-label">Dosage:</span>
+          <span class="d-pill">15–30 ml / 100 birds</span>
+          <span class="d-pill">2–5 ml / Liter water</span>
+        </div>
+        <a href="#contact" class="btn-enquire">Enquire Now →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo Gallery Row -->
+  <div class="photo-row">
+    <div class="photo-cell">
+      <img src="../PHOTO-2026-04-29-14-45-55.jpg" alt="Healthy Flock"
+           onerror="this.src='https://placehold.co/600x400/1B3D27/F5E8C0?text=Healthy+Flock'">
+      <div class="photo-caption">Healthy Flock</div>
+    </div>
+    <div class="photo-cell">
+      <img src="/PHOTO-2026-04-29-14-45-56.jpg" alt="Livestock Care"
+           onerror="this.src='https://placehold.co/600x400/2E5C3E/F5E8C0?text=Livestock+Care'">
+      <div class="photo-caption">Livestock Care</div>
+    </div>
+    <div class="photo-cell">
+      <img src="/WhatsApp Image 2026-04-29 at 14.45.49.jpeg" alt="Egg Quality"
+           onerror="this.src='https://placehold.co/600x400/C9A84C/1B3D27?text=Egg+Quality'">
+      <div class="photo-caption">Egg Quality</div>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDE -->
+<section class="section guide-section" id="guide">
+  <div class="guide-inner">
+    <div class="reveal">
+      <span class="s-label">Poultry Care Guide</span>
+      <h2 class="s-title">The Science of <em>Vaccine Stress</em> Management</h2>
+      <p class="s-sub" style="color:rgba(250,246,238,0.5)">
+        Strategic supplement protocols before and after vaccination dramatically reduce bird stress and improve immune response.
+      </p>
+      <div class="guide-tip">
+        <strong>💡 Pro Tip for Farmers</strong>
+        <p>When vaccinating birds, always administer <strong>StressNill Pro</strong> 24 hours before and after each vaccination session for optimal antibody formation.</p>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div>
+          <h4>Pre-Vaccination — 24 hrs Before</h4>
+          <p>Administer StressNill Pro in drinking water to prime electrolyte balance and reduce anticipatory stress.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div>
+          <h4>Vaccination Day</h4>
+          <p>Ensure birds are well-hydrated. Handle calmly and minimize environmental disruptions during dosing.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div>
+          <h4>Post-Vaccination — 24–48 hrs After</h4>
+          <p>Continue StressNill Pro support to sustain antibody response and accelerate immune recovery.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div>
+          <h4>Liver Support Protocol</h4>
+          <p>Follow up with Wings Livoton for 5–10 days to restore hepatic function and promote optimal growth.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOSING TABLE -->
+<section class="section dosing-section" id="dosing">
+  <div class="s-header reveal">
+    <span class="s-label">Dosing Reference</span>
+    <h2 class="s-title">Complete <strong>Dosage</strong> Schedule</h2>
+    <p class="s-sub">Detailed dosing guidelines for Broilers, Layers, and Cattle across all three product lines.</p>
+  </div>
+  <div class="table-wrap reveal">
+    <table>
+      <thead>
+        <tr>
+          <th>Condition</th>
+          <th>Bird Type</th>
+          <th>Product</th>
+          <th>Dosage</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Heat / Transport Stress</td>
+          <td>All poultry</td>
+          <td><span class="badge b-stress">StressNill Pro</span></td>
+          <td>1 ml per Liter water</td>
+          <td>During stress period</td>
+        </tr>
+        <tr>
+          <td>Severe Heat Stress</td>
+          <td>All poultry</td>
+          <td><span class="badge b-stress">StressNill Pro</span></td>
+          <td>2–5 ml per Liter</td>
+          <td>Until improvement</td>
+        </tr>
+        <tr>
+          <td>Vaccine Stress</td>
+          <td>All poultry</td>
+          <td><span class="badge b-stress">StressNill Pro</span></td>
+          <td>1 ml / Liter</td>
+          <td>24h before &amp; after</td>
+        </tr>
+        <tr>
+          <td>Liver Detox &amp; Growth</td>
+          <td>Broilers</td>
+          <td><span class="badge b-liver">Wings Livoton</span></td>
+          <td>10–20 ml daily</td>
+          <td>5–10 days</td>
+        </tr>
+        <tr>
+          <td>Weak Eggshells</td>
+          <td>Layers</td>
+          <td><span class="badge b-cal">Wings Cal-P</span></td>
+          <td>15–30 ml / 100 birds</td>
+          <td>Ongoing</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact-section" id="contact">
+  <div class="s-header reveal">
+    <span class="s-label">Get In Touch</span>
+    <h2 class="s-title">Contact Our <em>Veterinary</em> Experts</h2>
+    <p class="s-sub">Have a question or need bulk pricing? Our team is ready to help your flock thrive.</p>
+  </div>
+  <div class="contact-inner">
+    <div class="reveal">
+      <div class="contact-detail">
+        <div class="c-icon">📍</div>
+        <div>
+          <h4>Visit Us</h4>
+          <p>Plot No: 423/2708, Begunia, Balasore<br>Odisha – 756020</p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="c-icon">📞</div>
+        <div>
+          <h4>Call / WhatsApp</h4>
+          <a href="tel:+917681050912">+91 76810 50912</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="c-icon">📧</div>
+        <div>
+          <h4>Email</h4>
+          <a href="mailto:support@poultrycare.in">support@poultrycare.in</a>
+        </div>
+      </div>
+      <a href="https://wa.me/917681050912" target="_blank" class="wa-btn">
+        💬 Chat on WhatsApp
+      </a>
+    </div>
+
+    <div class="form-card reveal reveal-delay-1">
+      <div class="form-title">Send an Enquiry</div>
+      <div class="form-sub">Describe your flock's issue and we'll respond within 24 hours.</div>
+      <div class="form-grid">
+        <div class="fgroup">
+          <label>Full Name</label>
+          <input type="text" id="name" placeholder="Your name">
+        </div>
+        <div class="fgroup">
+          <label>Phone Number</label>
+          <input type="tel" id="phone" placeholder="Mobile number">
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="fgroup">
+          <label>Farm Type</label>
+          <select id="farm-type">
+            <option>Broiler Farm</option>
+            <option>Layer Farm</option>
+          </select>
+        </div>
+        <div class="fgroup">
+          <label>Flock Size</label>
+          <input type="number" id="flock" placeholder="e.g. 5000">
+        </div>
+      </div>
+      <div class="fgroup">
+        <label>Product of Interest</label>
+        <select id="product">
+          <option>StressNill Pro</option>
+          <option>Wings Livoton</option>
+          <option>Wings Cal-P</option>
+        </select>
+      </div>
+      <div class="fgroup">
+        <label>Message</label>
+        <textarea id="message" placeholder="Describe your issue or requirement..."></textarea>
+      </div>
+      <button class="form-submit" onclick="submitForm()">Send Enquiry →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="f-brand">
+      <h3>PoultryCare™ Veterinary Medicine</h3>
+      <div class="tagline">Trusted Care for Healthy Poultry</div>
+      <p>Science-backed supplements for stress management, liver health, and mineral growth — trusted across Odisha and beyond.</p>
+    </div>
+    <div class="f-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="#products">StressNill Pro</a></li>
+        <li><a href="#products">Wings Livoton</a></li>
+        <li><a href="#products">Wings Cal-P</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#guide">Care Guide</a></li>
+        <li><a href="#dosing">Dosing Schedule</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="tel:+917681050912">+91 76810 50912</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 PoultryCare Nutritionals, Balasore, Odisha. All rights reserved.</p>
+    <div class="f-badges">
+      <span class="f-badge">Made in India</span>
+      <span class="f-badge">Vet Formulated</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/917681050912" class="wa-float" target="_blank">💬</a>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Mobile menu
+const menuBtn = document.getElementById('menuBtn');
+const mobileNav = document.getElementById('mobileNav');
+const overlay = document.getElementById('overlay');
+
+function closeMenu() {
+  mobileNav.classList.remove('active');
+  overlay.classList.remove('active');
+  menuBtn.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function openMenu() {
+  mobileNav.classList.add('active');
+  overlay.classList.add('active');
+  menuBtn.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+menuBtn.addEventListener('click', () => mobileNav.classList.contains('active') ? closeMenu() : openMenu());
+overlay.addEventListener('click', closeMenu);
+document.querySelectorAll('.m-link').forEach(l => l.addEventListener('click', closeMenu));
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal, .step').forEach(el => revealObserver.observe(el));
+
+// Form submission
+function submitForm() {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  if (!name || !phone) { alert('Please fill in your name and phone number.'); return; }
+  const farm = document.getElementById('farm-type').value;
+  const flock = document.getElementById('flock').value;
+  const prod = document.getElementById('product').value;
+  const msg = document.getElementById('message').value;
+  const text = encodeURIComponent(
+    `Hello PoultryCare!\nName: ${name}\nPhone: ${phone}\nFarm: ${farm}\nFlock Size: ${flock}\nProduct: ${prod}\nMessage: ${msg}`
+  );
+  window.open(`https://wa.me/917681050912?text=${text}`, '_blank');
+}
+</script>
+</body>
+</html>
